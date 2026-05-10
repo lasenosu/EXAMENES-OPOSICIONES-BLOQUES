@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exámenes Oposiciones · Tecnología · Por Bloques</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --bg2: #eceae3;
+    --bg3: #e2dfda;
+    --ink: #1a1814;
+    --ink2: #4a4640;
+    --ink3: #8a8680;
+    --border: #ccc9c0;
+    --accent: #c0392b;
+    --accent2: #922b21;
+    --accent-bg: #fdf2f2;
+    --green: #1e6b45;
+    --green-bg: #f0f7f4;
+    --blue: #1a4c7c;
+    --blue-bg: #f0f4fa;
+    --orange: #b7510a;
+    --orange-bg: #fdf6f0;
+    --purple: #5b2d8e;
+    --purple-bg: #f6f2fb;
+    --teal: #0d6e6e;
+    --teal-bg: #f0f8f8;
+    --olive: #5a6a1e;
+    --olive-bg: #f5f8ee;
+    --maroon: #7b1e3b;
+    --maroon-bg: #fdf0f4;
+    --gray: #4a5568;
+    --gray-bg: #f7f8fa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink);
+    color: #f5f3ee;
+    padding: 1.75rem 2rem 1.5rem;
+    border-bottom: 3px solid var(--accent);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .header h1 span { color: var(--accent); }
+  .header-sub {
+    font-size: 0.75rem;
+    color: #aaa;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .header-note {
+    margin-left: auto;
+    font-size: 0.7rem;
+    color: #888;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    background: var(--accent-bg);
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem 2rem;
+  }
+  .intro-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .intro-text {
+    font-size: 0.8rem;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .intro-text strong { color: var(--accent); }
+  .intro-stats {
+    margin-left: auto;
+    display: flex;
+    gap: 1.5rem;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--ink3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── TABS ── */
+  .tabs-wrapper {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    position: sticky;
+    top: 74px;
+    z-index: 90;
+  }
+  .tabs {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0 2rem;
+  }
+  .tab {
+    flex-shrink: 0;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink2);
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .tab:hover { color: var(--ink); background: var(--bg3); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .tab-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tab-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    background: var(--bg3);
+    padding: 1px 5px;
+    border-radius: 9px;
+    color: var(--ink3);
+  }
+  .tab.active .tab-count {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ── BLOQUE PANEL ── */
+  .bloque-panel { display: none; }
+  .bloque-panel.active { display: block; }
+
+  .bloque-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .bloque-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .bloque-title-group h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .bloque-desc {
+    font-size: 0.82rem;
+    color: var(--ink2);
+    line-height: 1.5;
+    max-width: 680px;
+  }
+  .bloque-temas {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .tema-tag {
+    font-size: 0.65rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+  }
+
+  /* ── EXAMEN CARDS GRID ── */
+  .examen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+  }
+
+  .examen-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.1rem 1.25rem;
+    transition: box-shadow 0.15s, transform 0.1s;
+  }
+  .examen-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .card-year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: var(--ink);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .card-ccaa {
+    font-weight: 600;
+    font-size: 0.88rem;
+    flex: 1;
+    color: var(--ink);
+  }
+  .badge-sol {
+    font-size: 0.62rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  .badge-nosol {
+    font-size: 0.62rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+  }
+
+  .card-ejercicio {
+    font-size: 0.8rem;
+    color: var(--ink2);
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    font-style: italic;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .btn-pdf {
+    font-size: 0.72rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent2);
+  }
+  .btn-pdf:hover { background: var(--accent2); }
+  .btn-sol {
+    font-size: 0.72rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.1s;
+    background: #fff;
+    color: var(--green);
+    border: 1px solid var(--green);
+  }
+  .btn-sol:hover { background: var(--green-bg); }
+  .btn-dir {
+    font-size: 0.72rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    background: #fff;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    transition: all 0.1s;
+  }
+  .btn-dir:hover { background: var(--blue-bg); }
+
+  .note-bloque {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg2);
+    border-left: 3px solid var(--border);
+    border-radius: 0 4px 4px 0;
+    font-size: 0.75rem;
+    color: var(--ink3);
+    line-height: 1.5;
+  }
+
+  .empty-msg {
+    text-align: center;
+    padding: 3rem;
+    color: var(--ink3);
+    font-size: 0.85rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  footer a { color: var(--ink3); }
+
+  @media (max-width: 600px) {
+    .header-inner { gap: 0.5rem; }
+    .content { padding: 1rem; }
+    .examen-grid { grid-template-columns: 1fr; }
+    .intro-stats { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>Oposiciones Tecnología Secundaria · <span>Ejercicios por Bloque</span></h1>
+    <span class="header-sub">Especialidad 201 · Cuerpo 590 · España</span>
+    <span class="header-note">↩ <a href="https://lasenosu.github.io/EXAMENES-OPOSICIONES-TECNOLOG-A/" style="color:#888;text-decoration:none;">ver banco completo por CCAA</a></span>
+  </div>
+</div>
+
+<div class="intro">
+  <div class="intro-inner">
+    <p class="intro-text">Exámenes clasificados por bloque temático del ejercicio práctico. <strong>Haz clic en un bloque</strong> para ver todos los exámenes que lo incluyen, sin tener que abrir cada PDF por separado. Los bloques coinciden con los ejercicios habituales de la prueba práctica (Parte B).</p>
+    <div class="intro-stats">
+      <div class="stat"><div class="stat-num">9</div><div class="stat-label">Bloques</div></div>
+      <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Exámenes</div></div>
+      <div class="stat"><div class="stat-num">16</div><div class="stat-label">CCAA</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tabs" id="tabs">
+    <!-- generadas por JS -->
+  </div>
+</div>
+
+<div class="content" id="content">
+  <!-- generado por JS -->
+</div>
+
+<footer>
+  Fuentes: CEDE · AbacusNT · Oposinet · Educastur · Consejerías CCAA &nbsp;|&nbsp;
+  Los PDF acceden a archivos públicos. Actualizado 2026. &nbsp;|&nbsp;
+  <a href="https://lasenosu.github.io/EXAMENES-OPOSICIONES-TECNOLOG-A/">← Banco completo por CCAA</a>
+</footer>
+
+<script>
+const BLOQUES = [
+  {
+    id: 'neumatica',
+    nombre: 'Neumática e Hidráulica',
+    icon: '🔧',
+    color: '#c0392b',
+    bgColor: '#fdf2f2',
+    desc: 'Circuitos neumáticos e hidráulicos: identificación de componentes, diseño de circuitos con electroválvulas, cálculo de fuerzas en cilindros, consumo de aire, secuencias de movimiento, diagramas espacio-fase.',
+    temas: ['T.49 Neumática', 'T.50 Hidráulica', 'Electroneumática', 'Válvulas', 'Cilindros DE/SE'],
+    examenes: [
+      {
+        ccaa: 'Madrid', year: 2021, sol: true,
+        ejercicio: 'Ejercicio 1 (10p): Tabla de elementos neumáticos, válvula con cronograma, cálculo de fuerzas y consumo en cilindro DE.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/madrid/201MAD.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Cantabria', year: 2021, sol: false,
+        ejercicio: 'Parte B Op.A: Circuito neumático con electroválvulas y esquema eléctrico de mando; secuencia con 3 cilindros.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/cantabria/201CAN.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2018, sol: false,
+        ejercicio: 'Diseño de automatismo neumático para sistema de embalado con electroválvulas; esquema de mando eléctrico.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2021, sol: false,
+        ejercicio: 'Circuito neumático: identificación de componentes, diseño de secuencia y cálculo de parámetros.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2023, sol: false,
+        ejercicio: 'Neumática: elementos, válvulas distribuidoras y diseño de circuito con control eléctrico.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2021, sol: false,
+        ejercicio: 'Circuito neumático con cilindros de doble efecto y control por electroválvulas biestables.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2021, sol: false,
+        ejercicio: 'Neumática: cálculo de fuerza de cilindro, diseño de circuito de maniobra con temporizador.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Murcia', year: 2021, sol: false,
+        ejercicio: 'Electroneumática: diseño de circuito para secuencia A+B+A-B- con finales de carrera y electroválvulas.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Murcia%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Navarra', year: 2021, sol: false,
+        ejercicio: 'Neumática: análisis de circuito, identificación de elementos y cálculo de parámetros de funcionamiento.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Navarra%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Galicia', year: 2019, sol: false,
+        ejercicio: 'Circuito neumático con cilindros, diseño de diagrama espacio-fase y esquema de mando.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Galicia%202019/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Castilla y León', year: 2020, sol: false,
+        ejercicio: 'Neumática e hidráulica: componentes, cálculo de presión y caudal, diseño básico de circuito.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Castilla%20y%20Leon%202020/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Ejemplo Uniovi', year: 0, sol: false,
+        ejercicio: 'Instalación neumática para elevación y desplazamiento con 3 cilindros; esquema neumático con electroválvulas 4v2p y mando eléctrico.',
+        links: [
+          { label: '📄 PDF ejemplo', url: 'https://www.unioviedo.es/fombona/OPOS.pdf', type: 'pdf' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'electronica-digital',
+    nombre: 'Electrónica Digital',
+    icon: '⚙️',
+    color: '#1a4c7c',
+    bgColor: '#f0f4fa',
+    desc: 'Puertas lógicas, simplificación de funciones (Karnaugh, álgebra de Boole), circuitos combinacionales, biestables (RS, JK, D), contadores, registros, diseño de circuitos secuenciales síncronos.',
+    temas: ['T.55 Puertas lógicas', 'T.56 Simplificación', 'T.57 Circuitos secuenciales', 'Biestables JK/D', 'Karnaugh'],
+    examenes: [
+      {
+        ccaa: 'Madrid', year: 2021, sol: true,
+        ejercicio: 'Ejercicio 2 (10p): Display 7 segmentos. Tabla de verdad biestable JK, tabla de excitación, diseño de contador secuencial síncrono con biestables JK y Karnaugh.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/madrid/201MAD.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Cantabria', year: 2021, sol: false,
+        ejercicio: 'Puertas NAND de 3 entradas, diseño con puertas lógicas, función booleana y minimización.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/cantabria/201CAN.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2023, sol: false,
+        ejercicio: 'Electrónica digital: simplificación de función lógica, Karnaugh, implementación con puertas.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2018, sol: false,
+        ejercicio: 'Biestables, diseño de registro de desplazamiento, cronograma y tabla de estados.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Madrid', year: 2018, sol: true,
+        ejercicio: 'Diseño de circuito generador de números aleatorios, circuito 555, biestables.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2018/tecnologiamadrid18.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2018, sol: false,
+        ejercicio: 'Electrónica digital: puertas lógicas, simplificación álgebra Boole, implementación circuito.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Murcia', year: 2018, sol: false,
+        ejercicio: 'Diseño de contador BCD con biestables JK, tabla de transiciones y simplificación.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Murcia%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Navarra', year: 2020, sol: false,
+        ejercicio: 'Funciones lógicas, Karnaugh, multiplexor, decodificador y circuito combinacional.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Navarra%202020/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Cataluña', year: 2021, sol: false,
+        ejercicio: 'Diseño de circuito secuencial síncrono con biestables D, tabla de estados y Karnaugh.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Catalu%C3%B1a%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Castilla-La Mancha', year: 2023, sol: false,
+        ejercicio: 'Puertas lógicas, simplificación, cronograma de biestable y diseño de contador módulo n.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Castilla%20La%20Mancha%202023/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'materiales',
+    nombre: 'Materiales',
+    icon: '🧪',
+    color: '#1e6b45',
+    bgColor: '#f0f7f4',
+    desc: 'Diagramas de fases hierro-carbono, tratamientos térmicos (temple, revenido, recocido), ensayos mecánicos (Brinell, Vickers, tracción), propiedades de materiales, clasificación aceros/fundiciones.',
+    temas: ['T.20-23 Materiales metálicos', 'T.27 Ensayos', 'Diagrama Fe-C', 'Tratamientos térmicos', 'Dureza Brinell'],
+    examenes: [
+      {
+        ccaa: 'Madrid', year: 2021, sol: true,
+        ejercicio: 'Ejercicio 4 (10p): Diagrama Fe-C completo. Clasificación por %C, isoplática, dureza Brinell con cálculo, temple TTT y análisis de martensita.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/madrid/201MAD.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2018, sol: false,
+        ejercicio: 'Pieza Fe-C: concentración en peso y volumen, propiedades mecánicas y clasificación del material.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2023, sol: false,
+        ejercicio: 'Materiales: diagrama de fases, transformaciones en enfriamiento, ensayo de dureza y tratamiento térmico.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2021, sol: false,
+        ejercicio: 'Diagrama Fe-C, identificación de zonas, cálculo de proporciones de fases (lever rule), tratamiento térmico.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Madrid', year: 2018, sol: true,
+        ejercicio: 'Propiedades mecánicas de los materiales: clasificación, ensayos y diagrama tensión-deformación.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2018/tecnologiamadrid18.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2021, sol: false,
+        ejercicio: 'Materiales: ensayo de tracción, límite elástico, carga de rotura, deformación y módulo de Young.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Castilla y León', year: 2023, sol: false,
+        ejercicio: 'Diagrama Fe-C, cálculo composición, tratamiento TTT y selección de temple para herramienta.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Castilla%20y%20Le%C3%B3n%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Galicia', year: 2018, sol: false,
+        ejercicio: 'Clasificación de materiales, propiedades mecánicas y térmicas, ensayo de dureza Vickers.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Galicia%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'La Rioja', year: 2021, sol: false,
+        ejercicio: 'Materiales: propiedades, diagrama de equilibrio y tratamientos térmicos de aceros.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/La%20Rioja%202021/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'electricidad',
+    nombre: 'Electricidad',
+    icon: '⚡',
+    color: '#b7510a',
+    bgColor: '#fdf6f0',
+    desc: 'Circuitos en CC y CA: leyes de Kirchhoff, Thévenin, cálculo de impedancias, potencia activa/reactiva/aparente, factor de potencia, corrección del f.d.p., circuitos trifásicos, motores eléctricos.',
+    temas: ['T.41 CC', 'T.42-43 CA', 'T.44 Trifásica', 'T.45 Motores', 'T.46 Instalaciones'],
+    examenes: [
+      {
+        ccaa: 'Cantabria', year: 2021, sol: false,
+        ejercicio: 'Parte B Op.A: dos cargas trifásicas en paralelo (80kW f.d.p.0.8 y 30kW), cálculo de corriente de línea y factor de potencia conjunto.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/cantabria/201CAN.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2018, sol: false,
+        ejercicio: 'Circuito de alumbrado de vivienda, chispa en interruptor (inductancia), cálculo de instalación eléctrica.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2021, sol: false,
+        ejercicio: 'Circuito con impedancias a 220V/50Hz: cálculo de intensidad, tensiones y potencias.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2018, sol: false,
+        ejercicio: 'Motor eléctrico: cálculo de potencia, rendimiento y corriente de arranque.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2018, sol: false,
+        ejercicio: 'Circuito RLC serie-paralelo en CA, cálculo de impedancias, potencias y f.d.p.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Murcia', year: 2021, sol: false,
+        ejercicio: 'Instalación eléctrica en vivienda: cálculo de secciones, protecciones y potencia instalada.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Murcia%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'País Vasco', year: 2021, sol: false,
+        ejercicio: 'Circuito trifásico equilibrado: cálculo de potencias y corrección del factor de potencia.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Pais%20Vasco%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Navarra', year: 2024, sol: false,
+        ejercicio: 'Motores eléctricos de CA: par motor, velocidad, potencia y cálculo de rendimiento.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Navarra%202024/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'mecanismos',
+    nombre: 'Mecanismos y Máquinas',
+    icon: '⚙️',
+    color: '#5b2d8e',
+    bgColor: '#f6f2fb',
+    desc: 'Transmisión de movimiento: engranajes, poleas, correas, cadenas, tornillo sinfín. Cálculo de velocidades, fuerzas, potencias y rendimientos en trenes de engranajes. Máquinas térmicas: ciclos, potencia indicada y efectiva.',
+    temas: ['T.33-35 Mecanismos', 'T.36 Engranajes', 'T.37 Máquinas térmicas', 'T.38 Motores explosión', 'Tornillo sinfín'],
+    examenes: [
+      {
+        ccaa: 'Madrid', year: 2018, sol: true,
+        ejercicio: 'Sistema motor eléctrico + reductora tornillo sinfín + torno + poleas: velocidad de subida de peso, potencia del motor, fuerza tangencial entre dientes.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2018/tecnologiamadrid18.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Ejemplo Uniovi', year: 0, sol: false,
+        ejercicio: 'Motor + reductora de tornillo sinfín + torno (Z=30): cálculo velocidad, potencia WM, fuerza tangencial FS, estudio del tornillo sinfín.',
+        links: [
+          { label: '📄 PDF ejemplo', url: 'https://www.unioviedo.es/fombona/OPOS.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2018, sol: false,
+        ejercicio: 'Transmisión con polea y torno: velocidad, potencia, cable de acero y coeficiente de seguridad.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2021, sol: false,
+        ejercicio: 'Motor 4 tiempos monocilíndrico: PME, PMI, potencia indicada y efectiva, rendimiento mecánico.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2024, sol: false,
+        ejercicio: 'Tren de engranajes: relación de transmisión, velocidades angulares y potencia en cada eje.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202024/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Canarias', year: 2021, sol: false,
+        ejercicio: 'Mecanismos de transmisión: engranajes cónicos, velocidades y fuerzas tangenciales.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Canarias%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2024, sol: false,
+        ejercicio: 'Transmisión por correa: relación de transmisión, tensiones en ramales y potencia transmitida.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202024/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Galicia', year: 2019, sol: false,
+        ejercicio: 'Motor de explosión 4 tiempos: cálculo de PME, diagrama PV y potencia al freno.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Galicia%202019/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'estructuras',
+    nombre: 'Estructuras y Resistencia',
+    icon: '🏗️',
+    color: '#0d6e6e',
+    bgColor: '#f0f8f8',
+    desc: 'Estática y resistencia de materiales: vigas (simplemente apoyadas, empotradas), diagramas de esfuerzos, cálculo de reacciones, momento flector, esfuerzo cortante, dimensionamiento de secciones.',
+    temas: ['T.31 Estructuras', 'T.32 Resistencia materiales', 'Vigas', 'Momentos flectores', 'Seguridad al vuelco'],
+    examenes: [
+      {
+        ccaa: 'Ejemplo Uniovi', year: 0, sol: false,
+        ejercicio: 'Viga empotrada de longitud l y sección cuadrada maciza lado a: ancho de zapata de hormigón (ρ=2t/m³) para seguridad al vuelco=2 bajo cargas de viento.',
+        links: [
+          { label: '📄 PDF ejemplo', url: 'https://www.unioviedo.es/fombona/OPOS.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2023, sol: false,
+        ejercicio: 'Estructura isostática: cálculo de reacciones, diagramas de M flector y cortante, sección mínima.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2018, sol: false,
+        ejercicio: 'Viga biapoyada con carga puntual y distribuida: diagramas de esfuerzos y cálculo de sección resistente.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Castilla y León', year: 2023, sol: false,
+        ejercicio: 'Estructura espacial de barras: estudio de esfuerzos y comprobación de resistencia.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Castilla%20y%20Le%C3%B3n%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Asturias', year: 2018, sol: false,
+        ejercicio: 'Viga simplemente apoyada con cargas distribuidas: reacciones, diagramas de cortante y momento flector.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Principado%20de%20Asturias%202018/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Madrid', year: 2025, sol: false,
+        ejercicio: 'Estructura reticulada: método de los nudos, fuerzas en barras y coeficiente de seguridad.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Madrid%202025/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'control',
+    nombre: 'Sistemas de Control',
+    icon: '🎛️',
+    color: '#5a6a1e',
+    bgColor: '#f5f8ee',
+    desc: 'Sistemas automáticos: función de transferencia, álgebra de bloques (serie, paralelo, realimentación), simplificación de diagramas, respuesta temporal, estabilidad (Routh-Hurwitz), reguladores PID.',
+    temas: ['T.59 Sistemas control', 'T.60 Transductores', 'T.61-62 Actuadores', 'Función transferencia', 'Diagrama bloques'],
+    examenes: [
+      {
+        ccaa: 'Cantabria', year: 2021, sol: false,
+        ejercicio: 'Determinación de función de transferencia del lazo de la figura con realimentación; simplificación.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/cantabria/201CAN.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Ejemplo Uniovi', year: 0, sol: false,
+        ejercicio: 'Diagrama de bloques: función de transferencia en lazo cerrado con realimentación unitaria.',
+        links: [
+          { label: '📄 PDF ejemplo', url: 'https://www.unioviedo.es/fombona/OPOS.pdf', type: 'pdf' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2021, sol: false,
+        ejercicio: 'Sistema de control: simplificación de diagrama de bloques y función de transferencia resultante.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Madrid', year: 2021, sol: true,
+        ejercicio: 'Ejercicio 3: Sistema automático de control con sensor, controlador y actuador; bloques y función de transferencia.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2021/madrid/201MAD.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Navarra', year: 2021, sol: false,
+        ejercicio: 'Control automático: lazo cerrado, criterio de estabilidad Routh, respuesta al escalón.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Navarra%202021/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Extremadura', year: 2021, sol: false,
+        ejercicio: 'Sistemas de control: transductores, función de transferencia y simplificación de diagrama.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202021/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'electronica-analogica',
+    nombre: 'Electrónica Analógica',
+    icon: '📡',
+    color: '#7b1e3b',
+    bgColor: '#fdf0f4',
+    desc: 'Amplificadores operacionales (inversor, no inversor, sumador, integrador), transistores BJT (análisis en CC y CA, polarización, ganancia), diodos, rectificadores, filtros, circuito 555.',
+    temas: ['T.52 Electrónica analógica', 'T.53 Op-Amp', 'T.54 Transistores', 'Amplificadores', 'Diodos rectificadores'],
+    examenes: [
+      {
+        ccaa: 'Madrid', year: 2018, sol: true,
+        ejercicio: 'Circuito 555 como astable: cálculo de R1, R2 para f=1kHz con t1=70%T; capacidad del condensador.',
+        links: [
+          { label: '📄 Examen', url: 'https://www.cede.es/examenes2018/tecnologiamadrid18.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ]
+      },
+      {
+        ccaa: 'Andalucía', year: 2023, sol: false,
+        ejercicio: 'Amplificador operacional: configuración inversora, cálculo de ganancia, tensión de salida y corrientes.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202023/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Aragón', year: 2025, sol: false,
+        ejercicio: 'Transistor BJT en emisor común: punto de trabajo, recta de carga y ganancia de tensión.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202025/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'País Vasco', year: 2020, sol: false,
+        ejercicio: 'Amplificador operacional: sumador inversor con 3 entradas, cálculo de tensión de salida y potencias.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Pais%20Vasco%202020/', type: 'dir' }
+        ]
+      },
+      {
+        ccaa: 'Castilla-La Mancha', year: 2018, sol: false,
+        ejercicio: 'Circuito electrónico analógico: rectificador de onda completa, filtrado y regulación de tensión.',
+        links: [
+          { label: '📁 Carpeta', url: 'https://abacusnt.es/descargas/examenes/Castilla%20La%20Mancha%202018/', type: 'dir' }
+        ]
+      },
+    ]
+  },
+  {
+    id: 'general',
+    nombre: 'Exámenes Completos (carpetas)',
+    icon: '📂',
+    color: '#4a5568',
+    bgColor: '#f7f8fa',
+    desc: 'Acceso directo a las carpetas de exámenes completos por comunidad y año en AbacusNT. Cada carpeta contiene todos los ejercicios del examen (varios bloques). Útil cuando buscas el examen entero o para comunidades con varios años disponibles.',
+    temas: ['Todos los bloques', 'Por CCAA y año'],
+    examenes: [
+      { ccaa: 'Andalucía', year: 2025, sol: false, ejercicio: 'Carpeta con examen(es) de la convocatoria 2025.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202025/', type: 'dir' }] },
+      { ccaa: 'Andalucía', year: 2024, sol: false, ejercicio: 'Carpeta con examen(es) de la convocatoria 2024.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Andaluc%C3%ADa%202024/', type: 'dir' }] },
+      { ccaa: 'Aragón', year: 2025, sol: false, ejercicio: 'Carpeta con examen(es) de la convocatoria 2025.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202025/', type: 'dir' }] },
+      { ccaa: 'Aragón', year: 2024, sol: false, ejercicio: 'Carpeta con examen(es) de la convocatoria 2024.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Arag%C3%B3n%202024/', type: 'dir' }] },
+      { ccaa: 'Baleares', year: 2018, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2018.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Baleares%202018/', type: 'dir' }] },
+      { ccaa: 'Canarias', year: 2018, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2018.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Canarias%202018/', type: 'dir' }] },
+      { ccaa: 'Cantabria', year: 2018, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2018.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Cantabria%202018/', type: 'dir' }] },
+      { ccaa: 'Cataluña', year: 2021, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2021.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Catalu%C3%B1a%202021/', type: 'dir' }] },
+      { ccaa: 'Cataluña', year: 2020, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2020.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Catalu%C3%B1a%202020/', type: 'dir' }] },
+      { ccaa: 'Cataluña', year: 2019, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2019.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Catalu%C3%B1a%202019/', type: 'dir' }] },
+      { ccaa: 'Ceuta y Melilla', year: 2021, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2021.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Ceuta%20y%20Melilla%202021/', type: 'dir' }] },
+      { ccaa: 'Extremadura', year: 2024, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2024.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Extremadura%202024/', type: 'dir' }] },
+      { ccaa: 'La Rioja', year: 2018, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2018.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/La%20Rioja%202018/', type: 'dir' }] },
+      { ccaa: 'Madrid', year: 2025, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2025.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Madrid%202025/', type: 'dir' }] },
+      { ccaa: 'Madrid', year: 2023, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2023.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Madrid%202023/', type: 'dir' }] },
+      { ccaa: 'Madrid', year: 2021, sol: true, ejercicio: 'Carpeta con examen de la convocatoria 2021 (con solución CEDE).',
+        links: [
+          { label: '📄 Examen PDF', url: 'https://www.cede.es/examenes2021/madrid/201MAD.pdf', type: 'pdf' },
+          { label: '✓ Solución', url: 'https://www.cede.es/examenes-resueltos/', type: 'sol' }
+        ] },
+      { ccaa: 'Navarra', year: 2024, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2024.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Navarra%202024/', type: 'dir' }] },
+      { ccaa: 'Valencia', year: 2021, sol: false, ejercicio: 'Carpeta con examen de la convocatoria 2021.',
+        links: [{ label: '📁 AbacusNT', url: 'https://abacusnt.es/descargas/examenes/Valencia%202021/', type: 'dir' }] },
+      { ccaa: 'CEDE — resueltos', year: 0, sol: true, ejercicio: 'Portal CEDE con exámenes resueltos y vídeos de solución de la prueba práctica de Tecnología por convocatoria.',
+        links: [{ label: '🌐 CEDE resueltos', url: 'https://www.cede.es/examenes-resueltos/', type: 'dir' }] },
+    ]
+  },
+];
+
+// ── RENDER TABS ──
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+BLOQUES.forEach((b, i) => {
+  const tab = document.createElement('div');
+  tab.className = 'tab' + (i === 0 ? ' active' : '');
+  tab.innerHTML = `<span class="tab-dot" style="background:${b.color}"></span>${b.nombre}<span class="tab-count">${b.examenes.length}</span>`;
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.bloque-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + b.id).classList.add('active');
+  });
+  tabsEl.appendChild(tab);
+
+  // Panel
+  const panel = document.createElement('div');
+  panel.className = 'bloque-panel' + (i === 0 ? ' active' : '');
+  panel.id = 'panel-' + b.id;
+
+  const temasHtml = b.temas.map(t => `<span class="tema-tag" style="color:${b.color}">${t}</span>`).join('');
+  
+  let cardsHtml = '';
+  b.examenes.forEach(e => {
+    const yearTag = e.year > 0 ? `<span class="card-year">${e.year}</span>` : '';
+    const solBadge = e.sol ? '<span class="badge-sol">con solución</span>' : '<span class="badge-nosol">sin solución</span>';
+    const linksHtml = e.links.map(l => {
+      let cls = 'btn-pdf';
+      if (l.type === 'sol') cls = 'btn-sol';
+      if (l.type === 'dir') cls = 'btn-dir';
+      return `<a class="${cls}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`;
+    }).join('');
+    cardsHtml += `
+      <div class="examen-card">
+        <div class="card-top">
+          ${yearTag}
+          <span class="card-ccaa">${e.ccaa}</span>
+          ${solBadge}
+        </div>
+        <p class="card-ejercicio">${e.ejercicio}</p>
+        <div class="card-links">${linksHtml}</div>
+      </div>`;
+  });
+
+  panel.innerHTML = `
+    <div class="bloque-header">
+      <div class="bloque-icon" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1))">${b.icon}</div>
+      <div class="bloque-title-group">
+        <h2 style="color:${b.color}">${b.nombre}</h2>
+        <p class="bloque-desc">${b.desc}</p>
+        <div class="bloque-temas">${temasHtml}</div>
+      </div>
+    </div>
+    <div class="examen-grid">${cardsHtml}</div>
+    ${b.id !== 'general' ? `<p class="note-bloque">⚠ Las tarjetas con "📁 Carpeta" llevan al índice de AbacusNT: busca el PDF con código <strong>201</strong> (Tecnología). Las carpetas suelen contener ejercicios de varios bloques; la descripción indica cuál corresponde a este bloque.</p>` : ''}
+  `;
+  contentEl.appendChild(panel);
+});
+</script>
+</body>
+</html>
